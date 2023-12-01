@@ -15,7 +15,7 @@ fun main() {
     "nine" to 9
   )
 
-  File("src/main/resources/input1.txt").forEachLine { line ->
+  File("2023/day1/input1.txt").forEachLine { line ->
     val firstDigits = getFirstDigits(line, letterDigitMap)
     val partOneFirstDigit: Int = firstDigits.first!!
     val partTwoFirstDigit: Int = firstDigits.second!!
