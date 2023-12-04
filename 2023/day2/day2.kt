@@ -5,8 +5,9 @@ fun main() {
   var sumOfMinCubes = 0
 
   File("2023/day2/input2.txt").forEachLine { line ->
-    val id = line.substringBefore(':').filter { it.isDigit() }.toInt()
-    val rawSets = line.substringAfter(':').split(';')
+    val lineParts = line.split(':')
+    val id = lineParts[0].filter { it.isDigit() }.toInt()
+    val rawSets = lineParts[1].split(';')
     val sets = rawSets.map { rawSet ->
       SetOfCubes(rawSet)
     }
