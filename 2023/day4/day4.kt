@@ -12,14 +12,14 @@ fun main() {
     val winnerNumbers: List<Int> = numbers[0]
     val numbersYouHave: List<Int> = numbers[1]
     val winningCount = numbersYouHave.count { winnerNumbers.contains(it) }
-    sumOfPoints += (2.toDouble()).pow(winningCount - 1).toInt()
+    sumOfPoints += 2.0.pow(winningCount - 1).toInt()
     if(winningCount > 0) {
       winningCountByScratchcards[id] = winningCount
     }
     instancesByScratchcards[id] = 1
   }
   winningCountByScratchcards.forEach {(id, winningCount) ->
-    (1..winningCount).forEach {cardOffset ->
+    for (cardOffset in 1..winningCount) {
       val key = id + cardOffset
       if (instancesByScratchcards.containsKey(key)) {
         instancesByScratchcards[key] = instancesByScratchcards[key]!! + instancesByScratchcards[id]!!
