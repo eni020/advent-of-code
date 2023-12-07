@@ -13,6 +13,7 @@ fun main() {
     val partOneCardCounts: List<Int> = getPartOneCardCounts(card)
     val partOneMapId = getMapId(partOneCardCounts)
     partOneCardsByTypes[partOneMapId]!![card] = bid
+
     val partTwoCardCounts: List<Int> = getPartTwoCardCounts(card)
     val partTwoMapId = getMapId(partTwoCardCounts)
     partTwoCardsByTypes[partTwoMapId]!![card] = bid
@@ -24,21 +25,12 @@ fun main() {
   println("Answer for Part Two: $partTwoTotalWinnings")
 }
 
-private fun getTotalWinnings(
-  partOneCardsByTypes: Map<Int, MutableMap<String, Int>>,
-  partTwoStrengthOrder: String
-): Int {
-  val partOneBidsInOrder = partOneCardsByTypes.map { (_, cards) ->
-    cards.toSortedMap { x, y ->
-      compare(
-        x,
-        y,
-        partTwoStrengthOrder
-      )
-    }.map { it.value }
+private fun getTotalWinnings(cardsByTypes: Map<Int, MutableMap<String, Int>>, strengthOrder: String): Int {
+  val bidsInOrder = cardsByTypes.map { (_, cards) ->
+    cards.toSortedMap { x, y -> compare(x, y, strengthOrder) }.map { it.value }
   }.flatten()
-  val partOneTotalWinnings = partOneBidsInOrder.sumOf { it * (partOneBidsInOrder.indexOf(it) + 1) }
-  return partOneTotalWinnings
+  val totalWinnings = bidsInOrder.sumOf { it * (bidsInOrder.indexOf(it) + 1) }
+  return totalWinnings
 }
 
 private fun getPartOneCardCounts(card: String): List<Int> {
@@ -47,8 +39,7 @@ private fun getPartOneCardCounts(card: String): List<Int> {
 
 private fun getPartTwoCardCounts(card: String): List<Int> {
   val cardCounts: MutableList<Int> =
-    card.filter { it != 'J' }.groupingBy { it }.eachCount().values.sortedDescending()
-      .toMutableList()
+    card.filter { it != 'J' }.groupingBy { it }.eachCount().values.sortedDescending().toMutableList()
   if (cardCounts.isEmpty()) {
     return listOf(5)
   }
