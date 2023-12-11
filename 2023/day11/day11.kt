@@ -44,6 +44,6 @@ fun getPathLength(position1: Int, position2: Int, empties: List<Int>): Pair<Long
   val bigger = if (position1 > position2) position1 else position2
   val rawPath = bigger - smaller
   val partOneSpace = empties.count { it in (smaller + 1)..<bigger }.toLong()
-  val partTwoSpace = empties.count { it in (smaller + 1)..<bigger }.toLong() * 999999
+  val partTwoSpace = partOneSpace * (1000000 - 1)
   return Pair(rawPath + partOneSpace, rawPath + partTwoSpace)
 }
