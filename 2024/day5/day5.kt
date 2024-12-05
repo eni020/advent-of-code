@@ -39,11 +39,11 @@ private fun calculatePartTwo(pagesToProduce: List<Int>, relevantRules: List<Pair
     var i = 0
     while (i < pagesToSort.size) {
         val page = pagesToSort[i]
-        if (!relevantRules.any { it.second == page && pagesToSort.indexOf(it.first) >= i }) {
-            i++
-        } else {
+        if (relevantRules.any { it.second == page && pagesToSort.indexOf(it.first) >= i }) {
             pagesToSort.remove(page)
             pagesToSort.add(page)
+        } else {
+            i++
         }
     }
     return getMiddleElement(pagesToSort)
