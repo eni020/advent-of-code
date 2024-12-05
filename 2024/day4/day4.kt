@@ -85,8 +85,8 @@ fun isPartOfX(xWord: MutableList<WordSearchElement>, actElement: WordSearchEleme
 
     when (countOfLetters) {
         1 -> return xWord.first().position.isNeighbourStraight(actElement.position, 2)
-        3 -> return xWord[1].isMasWith(actElement) && xWord[2].position.isNeighbourDiagonally(actElement.position)
-        4 -> return xWord[0].isMasWith(actElement) && xWord[2].position.isNeighbourDiagonally(actElement.position)
+        3, 4 -> return xWord[0 + 4 - countOfLetters].isMasWith(actElement)
+                    && xWord[2].position.isNeighbourDiagonally(actElement.position)
     }
     return false
 }
