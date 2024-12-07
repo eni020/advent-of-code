@@ -25,7 +25,7 @@ fun main() {
         val fullWords = wordSearches.filter { it.letter.isStartOrEnd() }
         resultPartOne += fullWords.size
         wordSearches.removeAll(fullWords)
-        wordSearches.removeIf { w -> w.position.row < rownum || w.direction == Direction.HORIZONTAL }
+        wordSearches.removeIf { w -> w.position.row < rownum || w.direction == Direction.EAST }
         startLetters.removeIf { w -> w.position.row < rownum }
 
         val fullXWords = xWordSearches.filter { x -> x.size == 5 }

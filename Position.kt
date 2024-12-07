@@ -1,6 +1,6 @@
 import kotlin.math.abs
 
-class Position(
+data class Position(
     val row: Int,
     val column: Int
 ) {
