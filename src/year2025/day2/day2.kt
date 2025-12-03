@@ -1,6 +1,8 @@
-package year2025.day1
+package year2025.day2
 
 import java.io.File
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.time.measureTime
 
 fun main() {
@@ -18,26 +20,36 @@ fun main() {
             }
 
             val invalidIds: MutableSet<Long> = mutableSetOf()
+            val numParts: MutableSet<String> = mutableSetOf()
             for (numStart in leftStart..rightStart) {
                 val numPartString = numStart.toString()
-                for (i in 1..numPartString.length) {
-                    val numPart = numPartString.substring(0, i)
-                    var numString = ""
-                    (1..(right.toString().length / numPart.length) + 1).forEach { j ->
+                for (endIdx in numPartString.length downTo 1) {
+                    val numPart = numPartString.substring(0, endIdx)
+                    if (numParts.contains(numPart)) {
+                        break
+                    }
+                    numParts.add(numPart)
+                    val repeat = min(max(left.toString().length / endIdx, 2), right.toString().length)
+                    if (repeat < 2) {
+                        break
+                    }
+                    var numString = numPart.repeat(repeat)
+
+                    if (numString.toLong() < left) {
                         numString += numPart
-                        val num = numString.toLong()
-                        if (j > 1 && num in left..right) {
-                            if (j == 2) {
-                                partOneSum += num
-                            }
-                            invalidIds.add(num)
+                    }
+
+                    val num = numString.toLong()
+                    if (num in left..right) {
+                        if (numString == numPart + numPart) {
+                            partOneSum += num
                         }
+                        invalidIds.add(num)
                     }
                 }
             }
-            partTwoSum += invalidIds.sum()
 
-            println()
+            partTwoSum += invalidIds.sum()
         }
 
         println("Answer for Part One: $partOneSum")
