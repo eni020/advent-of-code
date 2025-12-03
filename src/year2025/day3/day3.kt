@@ -1,6 +1,7 @@
 package year2025.day3
 
 import java.io.File
+import kotlin.math.max
 import kotlin.time.measureTime
 
 fun main() {
@@ -9,7 +10,6 @@ fun main() {
         var partTwoSum: Long = 0
 
         val inputLines = File("src/year2025/day3/input3.txt").readLines()
-//        val inputLines = File("src/year2025/day3/sample3.txt").readLines()
         for (line in inputLines) {
             partOneSum += getLargestJoltage(line, 2)
             partTwoSum += getLargestJoltage(line, 12)
@@ -21,17 +21,18 @@ fun main() {
     println(timeTaken)
 }
 
-private fun getLargestJoltage(line: String, joltageLengh: Int): Long {
+private fun getLargestJoltage(line: String, joltageLength: Int): Long {
     var maxJoltage: MutableList<Int> = mutableListOf(line[0].toString().toInt())
-    val offCount = line.length - joltageLengh
+    val offCount = line.length - joltageLength
     for (lineIdx in 1..<line.length) {
         val actDigit = line[lineIdx].toString().toInt()
 
-        if (maxJoltage.size < joltageLengh) {
+        if (maxJoltage.size < joltageLength) {
             maxJoltage.add(actDigit)
         }
-        for (joltageIdx in 0..<maxJoltage.size) {
-            if (maxJoltage[joltageIdx] < actDigit && offCount + joltageIdx >= lineIdx) {
+        val startIdx = max(lineIdx - offCount, 0)
+        for (joltageIdx in startIdx..<maxJoltage.size) {
+            if (maxJoltage[joltageIdx] < actDigit) {
                 maxJoltage[joltageIdx] = actDigit
                 maxJoltage = maxJoltage.take(joltageIdx + 1).toMutableList()
                 break
