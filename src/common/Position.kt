@@ -23,6 +23,22 @@ data class Position(
         return isNeighbour(row, other.row, distance) && isNeighbour(column, other.column, distance)
     }
 
+    fun getNeighbours(lastRow: Int, lastColumn: Int): Set<Position> {
+        return setOf(
+            Position(row - 1, column - 1),
+            Position(row - 1, column),
+            Position(row - 1, column + 1),
+            Position(row, column - 1),
+            Position(row, column + 1),
+            Position(row + 1, column - 1),
+            Position(row + 1, column),
+            Position(row + 1, column + 1),
+        ).filter { p ->
+            p.row >= 0 && p.column >= 0 &&
+            p.row <= lastRow && p.column <= lastColumn
+        }.toSet()
+    }
+
     private fun isSame(num1: Int, num2: Int): Boolean {
         return num1 == num2
     }
