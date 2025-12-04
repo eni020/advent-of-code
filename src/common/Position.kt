@@ -11,7 +11,7 @@ data class Position(
     }
 
     fun isNeighbour(other: Position, distance: Int = 1): Boolean {
-        return isNeighbourStraight(other, distance) && isNeighbourDiagonally(other, distance)
+        return isNeighbourStraight(other, distance) || isNeighbourDiagonally(other, distance)
     }
 
     fun isNeighbourStraight(other: Position, distance: Int = 1): Boolean {
