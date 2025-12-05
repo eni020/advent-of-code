@@ -23,20 +23,25 @@ fun main() {
             }
         }
 
-        for (idx in ranges.indices.reversed()) {
-            val actRange = ranges[idx]
-            for (rIdx in ranges.indices) {
-                val rangeToCheck = ranges[rIdx]
-                if (rIdx != idx && (listOf(actRange.first, actRange.last).any { it in rangeToCheck })) {
-                    ranges[rIdx] = min(actRange.first, rangeToCheck.first)..max(actRange.last, rangeToCheck.last)
-                    ranges.remove(actRange)
-                    break
+        val uniqueRanges = mutableListOf<LongRange>()
+        for (idx in ranges.indices) {
+            var range = ranges[idx]
+            var urIdx = 0
+            while (urIdx in uniqueRanges.indices) {
+                val uniqueRange = uniqueRanges[urIdx]
+                if (listOf(range.first, range.last).any { it in uniqueRange }
+                        || listOf(uniqueRange.first, uniqueRange.last).any { it in range }) {
+                    range = min(range.first, uniqueRange.first)..max(range.last, uniqueRange.last)
+                    uniqueRanges.remove(uniqueRange)
+                } else {
+                    urIdx++
                 }
             }
+            uniqueRanges.add(range)
         }
 
 
-        val partTwoCount = ranges.sumOf { it -> it.last - it.first + 1 }
+        val partTwoCount = uniqueRanges.sumOf { it.last - it.first + 1 }
 
 
         println("Answer for Part One: $partOneCount")
