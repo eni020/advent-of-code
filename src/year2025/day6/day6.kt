@@ -29,13 +29,13 @@ fun main() {
 
         val operandLine = inputLines.last()
         inputLines.remove(operandLine)
-        var previousPosition = 0
-        for (idx in 1..operandLine.length) {
-            if (idx == operandLine.length || operandLine[idx] != ' ') {
+        var previousPosition = -1
+        for (idx in operandLine.indices.reversed()) {
+            if (operandLine[idx] != ' ') {
                 val nums = mutableListOf<String>()
                 for (line in inputLines) {
-                    val endIdx = if (operandLine.substring(idx, operandLine.length).trim().isEmpty()) line.length else idx - 1
-                    val linePart = line.substring(previousPosition, endIdx)
+                    val endIdx = if (previousPosition == -1) line.length else previousPosition
+                    val linePart = line.substring(idx, endIdx)
                     for (cIdx in linePart.indices) {
                         val char = linePart[cIdx].toString().trim()
                         if (nums.size <= cIdx) {
@@ -45,12 +45,10 @@ fun main() {
                         }
                     }
                 }
-                partTwoSum += handleOperation(nums.map { it.toLong() }, operandLine[previousPosition].toString())
+                partTwoSum += handleOperation(nums.filter { it.isNotBlank() }.map { it.toLong() }, operandLine[idx].toString())
                 previousPosition = idx
             }
         }
-
-
 
         println("Answer for Part One: $partOneSum")
         println("Answer for Part Two: $partTwoSum")
