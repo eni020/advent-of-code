@@ -38,6 +38,18 @@ data class Position(
             p.row <= lastRow && p.column <= lastColumn
         }.toSet()
     }
+    
+    fun getArea(other: Position): Long {
+        return (abs(row - other.row) + 1).toLong() * (abs(column - other.column) + 1).toLong()
+    }
+
+    fun hasSameRowWith(other: Position): Boolean {
+        return isSame(row, other.row)
+    }
+
+    fun hasSameColumnWith(other: Position): Boolean {
+        return isSame(column, other.column)
+    }
 
     private fun isSame(num1: Int, num2: Int): Boolean {
         return num1 == num2
