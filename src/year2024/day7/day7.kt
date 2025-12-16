@@ -2,7 +2,6 @@ package year2024.day7
 
 import common.DecimalToBaseNConverterUtil
 import java.io.File
-import kotlin.math.pow
 import kotlin.time.measureTime
 
 fun main() {
@@ -45,16 +44,16 @@ fun main() {
 }
 
 private fun handleOperator(
-    operators: List<Int>,
+    operators: String,
     operands: List<Long>
 ): Long {
     var result = operands[0]
     for (operator in operators.withIndex()) {
         val actOperand = operands[operator.index + 1]
         when (operator.value) {
-            0 -> { result += actOperand }
-            1 -> { result *= actOperand }
-            2 -> { result = (result.toString() + actOperand.toString()).toLong() }
+            '0' -> { result += actOperand }
+            '1' -> { result *= actOperand }
+            '2' -> { result = (result.toString() + actOperand.toString()).toLong() }
         }
     }
     return result

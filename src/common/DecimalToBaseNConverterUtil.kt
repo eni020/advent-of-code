@@ -4,12 +4,12 @@ import kotlin.math.pow
 
 class DecimalToBaseNConverterUtil {
     companion object {
-        fun getBaseNRange(base: Int, maxLength: Int): List<List<Int>> {
+        fun getBaseNRange(base: Int, maxLength: Int, start: Int = 0): List<String> {
             if (base > 10) {
                 return listOf()
             }
 
-            return (0..<base.toDouble().pow(maxLength).toInt()).map { getBaseNFromDecimal(base, it, maxLength).map { it.code - '0'.code } }.sortedBy { baseN -> baseN.sum() }
+            return (start..<base.toDouble().pow(maxLength).toInt()).map { getBaseNFromDecimal(base, it, maxLength) }.sortedBy { baseN -> baseN.filter { it =='1' }.length }
         }
 
         private fun getBaseNFromDecimal(base: Int, decimal: Int, padding: Int): String {
